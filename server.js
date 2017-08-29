@@ -6,7 +6,7 @@ const app = express()
 
 var action = "Idle"
 app.get('/set/', function (req, res) {
-  console.log("set action : " + action + req.params.action)
+  console.log("set action : " + action + req.query.action)
   action = req.params.action + "";
 
   res.set('Content-Type', 'text/html')
