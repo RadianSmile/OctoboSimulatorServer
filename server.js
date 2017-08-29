@@ -4,19 +4,19 @@ const app = express()
 
 
 
-var action = "Idle"
+var global_action = "Idle"
 app.get('/set/', function (req, res) {
   console.log("set action : " + action + req.query.action)
-  action = req.params.action + "";
+  global_action = req.params.action + "";
 
   res.set('Content-Type', 'text/html')
   res.send(action)
 
 })
 app.get('/action/',function (req,res){
-  console.log("sent action : " + action)
+  console.log("sent action : " + global_action)
   res.set('Content-Type', 'text/html')
-  res.send(action)
+  res.send(global_action)
 })
 
 app.use("/", express.static(__dirname + "/public/"));
