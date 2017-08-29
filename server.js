@@ -6,11 +6,10 @@ const app = express()
 
 var global_action = "Idle"
 app.get('/set/', function (req, res) {
-  console.log("set action : " + action + req.query.action)
   global_action = req.params.action + "";
-
+  console.log("set action : " + global_action + req.query.action)
   res.set('Content-Type', 'text/html')
-  res.send(action)
+  res.send(global_action)
 
 })
 app.get('/action/',function (req,res){
