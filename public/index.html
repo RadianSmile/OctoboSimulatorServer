@@ -139,7 +139,7 @@
         action : function (action){
 
           $.get("/set/",{
-            action
+            action : action 
           },function (a,b,c){
             console.log(a,b,c)
           },"text")
