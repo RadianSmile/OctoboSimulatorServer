@@ -1,11 +1,11 @@
 const express = require('express')
 const app = express()
 
-app.use("/", express.static(__dirname + "/public/"));
+
 
 
 var action = "Idle"
-app.get('/set', function (req, res) {
+app.get('/set/', function (req, res) {
   console.log("set action : " + action)
   action = req.params.action + "";
 
@@ -13,14 +13,15 @@ app.get('/set', function (req, res) {
   res.send(action)
 
 })
-app.get('/action',function (req,res){
+app.get('/action/',function (req,res){
   console.log("sent action : " + action)
   res.set('Content-Type', 'text/html')
   res.send(action)
 })
 
+app.use("/", express.static(__dirname + "/public/"));
 
-app.listen(3000, function () {
-  console.log("static folder : " + __dirname + "/public" );
-  console.log('Example app listening on port 3000!')
-})
+app.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
+  var addr = app.address();
+  console.log("Chat server listening at", addr.address + ":" + addr.port);
+});
