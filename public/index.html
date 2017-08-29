@@ -137,7 +137,8 @@
       },
       methods : {
         action : function (action){
-          $.get("https://playoctobo-radiansmile.c9users.io:3000/",{
+
+          $.get("/set",{
             action
           },function (a,b,c){
             console.log(a,b,c)
