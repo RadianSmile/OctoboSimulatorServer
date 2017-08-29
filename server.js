@@ -21,6 +21,6 @@ app.get('/action',function (req,res){
 
 
 app.listen(3000, function () {
-  console.log("static folder : " + __dirname + "public" );
+  console.log("static folder : " + __dirname + "/public" );
   console.log('Example app listening on port 3000!')
 })
