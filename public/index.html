@@ -2,6 +2,10 @@
 <html>
   <head>
 
+
+    <!-- Color Refernce  -->
+    <!-- http://paletton.com/#uid=33y0u0kllll7Mvsezqos7giDHbe -->
+
     <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
 
     <!-- Latest compiled and minified CSS -->
@@ -119,11 +123,14 @@
       data: {
         class_name : "col-xs-6 col-md-3 col-lg-2",
 
+
         hardware_actions : [
           "Shake Hand",
           "Hug",
+          "Button",
           "Touch Head",
-          "Shake"
+          "Shake",
+          "Wiggle"
 
         ],
 
@@ -131,7 +138,7 @@
 
 
         extended_tokens : [
-          "Gift"
+          "Invitation","Celebration"
         ],
 
       },
@@ -139,7 +146,7 @@
         action : function (action){
 
           $.get("/set/",{
-            action : action 
+            action : action
           },function (a,b,c){
             console.log(a,b,c)
           },"text")
