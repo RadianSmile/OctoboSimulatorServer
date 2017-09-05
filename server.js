@@ -11,7 +11,7 @@ app.get('/set/', function (req, res) {
 
   console.log("set action : " + global_action )
   res.set('Content-Type', 'text/html')
-  res.send(global_action)
+  res.send(action_id + "," + global_action)
 
 })
 app.get('/action/',function (req,res){
