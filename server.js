@@ -2,20 +2,22 @@ const express = require('express')
 const app = express()
 
 
-
+var action_id = 0
 
 var global_action = "Idle"
 app.get('/set/', function (req, res) {
+  action_id += 1 ;
   global_action = req.query.action + "";
+
   console.log("set action : " + global_action )
   res.set('Content-Type', 'text/html')
   res.send(global_action)
 
 })
 app.get('/action/',function (req,res){
-  console.log("sent action : " + global_action)
+  console.log("sent action  " + action_id + ","+ global_action)
   res.set('Content-Type', 'text/html')
-  res.send(global_action)
+  res.send(action_id + "," + global_action)
 })
 
 app.use("/", express.static(__dirname + "/public/"));
