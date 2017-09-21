@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
+    "edit-google-spreadsheet": "^0.2.21",
     "express": "^4.15.4"
   },
   "devDependencies": {},
