@@ -22,7 +22,7 @@ app.get('/action/',function (req,res){
 
 app.use("/", express.static(__dirname + "/public/"));
 
-app.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
+app.listen(process.env.PORT || 60000, process.env.IP || "0.0.0.0", function(){
   console.log(process.env.PORT,process.env.IP)
   // var addr = app.address();
   // console.log("Chat server listening at", addr.address + ":" + addr.port);
