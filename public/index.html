@@ -46,70 +46,103 @@
         cursor: pointer ;
         background: #0F3554;
       }
+      .center
+      {
+        position: absolute;
+        margin: auto;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 3px;
+      }
+      .center * {
+        text-align: center; 
+      }
     </style>
 
   </head>
   <body>
-    <div id="app" class="container">
+    <div id="app" >
 
 <!--  -->
-
-      <div class="row">
-        <div class="col-xs-12">
-          <h1>Hardware Aciton</h1>
+      <div class="container" v-if="devices.length > 0">
+        <div class="row">
+          <div class="col-xs-12">
+            <h1>Devices</h1>
+          </div>
         </div>
-      </div>
 
-      <div class="row">
-        <div v-for="a in hardware_actions" :class="class_name" >
-          <div class="b" @click="action(a)">
-            {{a}}
+        <div class="row">
+          <div v-for="d in devices" :class="class_name" >
+            <div class="b" @click="control(d)">
+              {{d}}
+            </div>
           </div>
         </div>
       </div>
 
+      <div class="center" v-else>
+        <h2>偵測裝置中...</h2>
+        <br>
+        <p>請先開啟 APP</p>
+
+
+      </div>
+<!--  -->
+      <div class="container" v-if="devices.length > 0 && current.device">
+        <div class="row">
+          <div class="col-xs-12">
+            <h1>Hardware Aciton</h1>
+          </div>
+        </div>
+
+        <div class="row">
+          <div v-for="a in hardware_actions" :class="class_name" >
+            <div class="b" @click="action(a)">
+              {{a}}
+            </div>
+          </div>
+        </div>
+
 <!--  -->
 
-      <div class="row">
-        <div class="col-xs-12">
-          <h1>Tokens</h1>
+        <div class="row">
+          <div class="col-xs-12">
+            <h1>Tokens</h1>
+          </div>
         </div>
-      </div>
 
 
-      <div class="row">
-        <div v-for="a in alphabel_tokens" :class="class_name" >
-          <div class="b" @click="action(a)">
-            {{a}}
+        <div class="row">
+          <div v-for="a in alphabel_tokens" :class="class_name" >
+            <div class="b" @click="action(a)">
+              {{a}}
+            </div>
+          </div>
+        </div>
+
+
+<!--  -->
+
+        <div class="row">
+          <div class="col-xs-12">
+            <h1>Extended Tokens</h1>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div v-for="t in extended_tokens" :class="class_name" >
+            <div class="b" @click="action(t)">
+              {{t}}
+            </div>
           </div>
         </div>
       </div>
-
-
-<!--  -->
-
-      <div class="row">
-        <div class="col-xs-12">
-          <h1>Extended Tokens</h1>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div v-for="t in extended_tokens" :class="class_name" >
-          <div class="b" @click="action(t)">
-            {{t}}
-          </div>
-        </div>
-      </div>
-
-
-
-      <div class="row">
-
-      </div>
-    </div>
-
+    </div><!-- #app -->
     <script>
 
     function GenCharArray(charA, charZ) {
@@ -126,6 +159,12 @@
       data: {
         class_name : "col-xs-6 col-md-3 col-lg-2",
 
+        current : {
+          device : "",
+          action : ""
+        },
+
+        devices : [],
 
         hardware_actions : [
           // "Shake Hand",
@@ -150,13 +189,28 @@
       },
       methods : {
         action : function (action){
+          var t = this
+          const device = t.current.device
+          const action = t.current.action
 
-          $.get("/set/",{
-            action : action
+          $.get("/set/" + device,{
+            action
           },function (a,b,c){
             console.log(a,b,c)
           },"text")
+        },
+        control : function (device){
+          var t = this
+          t.current.device = device
         }
+      },
+      ready : function (){
+        var t = this
+        setInterval (function(){
+          $.get("/devices/",function(data ,status ,c){
+            t.devices = data.devices
+          },"json")
+        },1000)
       }
     })
 </script>

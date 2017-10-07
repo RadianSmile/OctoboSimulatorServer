@@ -1,23 +1,47 @@
 const express = require('express')
 const app = express()
 
+var deviceActionDictionary = {}
 
-var action_id = 0
+app.get('/set/:device/', function (req, res) {
+  const device = req.params.device + ""
+  const action = req.query.action + ""
+  const time = Date.now
 
-var global_action = "Idle"
-app.get('/set/', function (req, res) {
-  action_id += 1 ;
-  global_action = req.query.action + "";
+  if typeof deviceActionDictionary[device] !== "object"
+      deviceActionDictionary[device] = {time , action }
+  else {
+    deviceActionDictionary[device].time = time
+    deviceActionDictionary[device].action = action
+  }
+  console.log("Set device:" , device , "action:", action, "time:",time)
 
-  console.log("set action : " + global_action )
   res.set('Content-Type', 'text/html')
   res.send(action_id + "," + global_action)
 
 })
-app.get('/action/',function (req,res){
-  console.log("sent action  " + action_id + ","+ global_action)
+app.get('/get/:device/',function (req,res){
+  const device = req.params.device + ""
+
+  if typeof deviceActionDictionary[device] !== "object"
+    deviceActionDictionary[device] = {
+      action : "Idle" ,
+      time : Date.now
+    }
+
+  const deviceData = deviceActionDictionary[device]
+  const action = deviceData.action
+  const time   = action.time
+  console.log("Get device:" , device , "action:", action, "time:",time)
+
   res.set('Content-Type', 'text/html')
   res.send(action_id + "," + global_action)
+})
+
+app.get('/devices/',function(req,res){
+  res.json({
+    devices : Object.keys(deviceActionDictionary)
+  })
 })
 
 
@@ -47,7 +71,7 @@ app.get("/tokens/",function(req,res){
       var data =  obj2csv(rows)
       console.log("Found rows:",data);
 
-      
+
       res.set('Content-Type', 'text/html')
       res.send(data)
 
