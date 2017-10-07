@@ -6,9 +6,9 @@ var deviceActionDictionary = {}
 app.get('/set/:device/', function (req, res) {
   const device = req.params.device + ""
   const action = req.query.action + ""
-  const time = Date.now
+  const time = Date.now()
 
-  if typeof deviceActionDictionary[device] !== "object"
+  if (typeof deviceActionDictionary[device] !== "object")
       deviceActionDictionary[device] = {time , action }
   else {
     deviceActionDictionary[device].time = time
@@ -17,25 +17,28 @@ app.get('/set/:device/', function (req, res) {
   console.log("Set device:" , device , "action:", action, "time:",time)
 
   res.set('Content-Type', 'text/html')
-  res.send(action_id + "," + global_action)
+  res.send(time + "," + action)
 
 })
 app.get('/get/:device/',function (req,res){
   const device = req.params.device + ""
-
-  if typeof deviceActionDictionary[device] !== "object"
+  if (typeof deviceActionDictionary[device] !== "object")
     deviceActionDictionary[device] = {
       action : "Idle" ,
-      time : Date.now
+      time : Date.now()
     }
+
+
 
   const deviceData = deviceActionDictionary[device]
   const action = deviceData.action
-  const time   = action.time
+  const time   = deviceData.time
+
+  deviceData.final = Date.now()
   console.log("Get device:" , device , "action:", action, "time:",time)
 
   res.set('Content-Type', 'text/html')
-  res.send(action_id + "," + global_action)
+  res.send(time + "," + action)
 })
 
 app.get('/devices/',function(req,res){
@@ -44,6 +47,16 @@ app.get('/devices/',function(req,res){
   })
 })
 
+setInterval(function (){
+  Object.keys(deviceActionDictionary).forEach(function(deviceName){
+    const deviceData = deviceActionDictionary[deviceName]
+    if (Date.now() - deviceData.final  >  10 * 1000 ){
+      delete deviceActionDictionary[deviceName]
+      console.log("Device Inactive:",deviceName,", Deleted")
+    }
+
+  })
+},10)
 
 
 
@@ -84,7 +97,7 @@ app.get("/tokens/",function(req,res){
 app.use("/", express.static(__dirname + "/public/"));
 
 app.listen(process.env.PORT || 60000, process.env.IP || "0.0.0.0", function(){
-  console.log(process.env.PORT,process.env.IP)
+  // console.log(process.env.PORT,process.env.IP)
   // var addr = app.address();
   // console.log("Chat server listening at", addr.address + ":" + addr.port);
 });

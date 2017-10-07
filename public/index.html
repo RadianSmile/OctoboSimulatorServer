@@ -26,6 +26,7 @@
     <style>
       body {
         background-color:  #2A4F6E ;
+        color : #7D91A2 ;
       }
       h1 {
         letter-spacing: .1rem;
@@ -44,7 +45,10 @@
       }
       .b:hover {
         cursor: pointer ;
-        background: #0F3554;
+        background: #03213A;
+      }
+      .selected {
+        background : #0F3554 ;
       }
       .center
       {
@@ -55,11 +59,12 @@
         bottom: 0;
         left: 0;
         width: 100%;
-        height: 100%;
+        height : 200px ;
         border-radius: 3px;
       }
       .center * {
-        text-align: center; 
+
+        text-align: center;
       }
     </style>
 
@@ -77,7 +82,7 @@
 
         <div class="row">
           <div v-for="d in devices" :class="class_name" >
-            <div class="b" @click="control(d)">
+            <div :class="d === current.device ? 'b selected' : 'b'" @click="control(d)">
               {{d}}
             </div>
           </div>
@@ -85,14 +90,14 @@
       </div>
 
       <div class="center" v-else>
-        <h2>偵測裝置中...</h2>
+        <h2>目前並無裝置</h2>
         <br>
-        <p>請先開啟 APP</p>
+        <p style="color : #4E6E88">偵測裝置中...請先開啟 APP</p>
 
 
       </div>
 <!--  -->
-      <div class="container" v-if="devices.length > 0 && current.device">
+      <div class="container" v-if="devices.length > 0 && current.device.length > 0">
         <div class="row">
           <div class="col-xs-12">
             <h1>Hardware Aciton</h1>
@@ -101,7 +106,7 @@
 
         <div class="row">
           <div v-for="a in hardware_actions" :class="class_name" >
-            <div class="b" @click="action(a)">
+            <div :class="a === current.action ? 'b selected' : 'b'" @click="action(a)">
               {{a}}
             </div>
           </div>
@@ -118,7 +123,7 @@
 
         <div class="row">
           <div v-for="a in alphabel_tokens" :class="class_name" >
-            <div class="b" @click="action(a)">
+            <div :class="a === current.action ? 'b selected' : 'b'" @click="action(a)">
               {{a}}
             </div>
           </div>
@@ -136,7 +141,7 @@
 
         <div class="row">
           <div v-for="t in extended_tokens" :class="class_name" >
-            <div class="b" @click="action(t)">
+            <div :class="t === current.action ? 'b selected' : 'b'" @click="action(t)">
               {{t}}
             </div>
           </div>
@@ -190,10 +195,9 @@
       methods : {
         action : function (action){
           var t = this
-          const device = t.current.device
-          const action = t.current.action
+          t.current.action = action
 
-          $.get("/set/" + device,{
+          $.get("/set/" + t.current.device,{
             action
           },function (a,b,c){
             console.log(a,b,c)
@@ -202,15 +206,18 @@
         control : function (device){
           var t = this
           t.current.device = device
+          t.current.action = ""
         }
       },
-      ready : function (){
+      mounted : function (){
         var t = this
         setInterval (function(){
           $.get("/devices/",function(data ,status ,c){
             t.devices = data.devices
+            if (t.devices.indexOf(t.current.device) < 0 )
+              t.current.device = ""
           },"json")
-        },1000)
+        },1)
       }
     })
 </script>
