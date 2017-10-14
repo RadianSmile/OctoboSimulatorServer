@@ -90,9 +90,11 @@
       </div>
 
       <div class="center" v-else>
-        <h2>目前並無裝置</h2>
+        <h2>偵測裝置中
+          <span v-for="i in dot">.</span>
+        </h2>
         <br>
-        <p style="color : #4E6E88">偵測裝置中...請先開啟 APP</p>
+        <p style="color : #4E6E88">請先開啟 APP</p>
 
 
       </div>
@@ -163,7 +165,7 @@
       el: '#app',
       data: {
         class_name : "col-xs-6 col-md-3 col-lg-2",
-
+        dot : 2 ,
         current : {
           device : "",
           action : ""
@@ -179,11 +181,11 @@
           "Shake",
           "Wiggle",
           "Clap",
+          "Clap3",
           "Idle"
-
         ],
 
-        alphabel_tokens : ["A","B","C","L","P","FL","FC","FT","CR","CY","CB","ABC"],
+        alphabel_tokens : ["A","B","C","L","P","K","L","M","FL","FC","FT","CR","CY","CB","ABC"],
         //GenCharArray('A', 'Z'),
 
 
@@ -217,7 +219,13 @@
             if (t.devices.indexOf(t.current.device) < 0 )
               t.current.device = ""
           },"json")
-        },1)
+
+          if (t.dot +1 === 4){
+            t.dot = 1
+          }else {
+            t.dot++
+          }
+        },1000)
       }
     })
 </script>

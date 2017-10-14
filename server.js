@@ -21,7 +21,12 @@ app.get('/set/:device/', function (req, res) {
 
 })
 app.get('/get/:device/',function (req,res){
-  const device = req.params.device + ""
+  // stupid unity could only send alpha numeric ....
+
+  var device = req.params.device + ""
+  
+
+
   if (typeof deviceActionDictionary[device] !== "object")
     deviceActionDictionary[device] = {
       action : "Idle" ,
