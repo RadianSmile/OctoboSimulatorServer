@@ -24,7 +24,7 @@ app.get('/get/:device/',function (req,res){
   // stupid unity could only send alpha numeric ....
 
   var device = req.params.device + ""
-  
+
 
 
   if (typeof deviceActionDictionary[device] !== "object")
@@ -98,6 +98,17 @@ app.get("/tokens/",function(req,res){
   });
 })
 
+var strForShow ;
+
+app.get("/show/",function(req,res){
+  console.log("start")
+  if (req.query.json){
+    strForShow = req.query.json
+  }
+  console.log(strForShow)
+  res.end(strForShow)
+  console.log("end")
+})
 
 app.use("/", express.static(__dirname + "/public/"));
 
