@@ -98,16 +98,23 @@ app.get("/tokens/",function(req,res){
   });
 })
 
+var bodyParser = require('body-parser')
+app.use(bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
+
 var strForShow ;
 
-app.get("/show/",function(req,res){
+app.all("/show/",function(req,res){
   console.log("start")
-  if (req.query.json){
-    strForShow = req.query.json
+  if (req.body.json){
+    strForShow = req.body.json
   }
   console.log(strForShow)
   res.end(strForShow)
   console.log("end")
+  console.log(obj2csv(strForShow))
 })
 
 app.use("/", express.static(__dirname + "/public/"));

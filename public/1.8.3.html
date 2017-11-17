@@ -98,16 +98,22 @@
 
 
       </div>
+
+
+
+
+<!--  -->
+
 <!--  -->
       <div class="container" v-if="devices.length > 0 && current.device.length > 0">
         <div class="row">
           <div class="col-xs-12">
-            <h1>Korea Hardware Aciton<small>(1.5.5)</small></h1>
+            <h1>Hardware Aciton<small>(1.8.3)</small></h1>
           </div>
         </div>
 
         <div class="row">
-          <div v-for="a in korea_hardware_actions" :class="class_name" >
+          <div v-for="a in hardware_actions" :class="class_name" >
             <div :class="a === current.action ? 'b selected' : 'b'" @click="action(a)">
               {{a}}
             </div>
@@ -117,13 +123,13 @@
 
         <div class="row">
           <div class="col-xs-12">
-            <h1>Korea Tokens <small>(1.5.5)</small></h1>
+            <h1>Tokens<small>(1.8.3)</small></h1>
           </div>
         </div>
 
 
         <div class="row">
-          <div v-for="a in korea_frequent_tokens" :class="class_name" >
+          <div v-for="a in frequent_tokens" :class="class_name" >
             <div :class="a === current.action ? 'b selected' : 'b'" @click="action(a)">
               {{a}}
             </div>
@@ -131,29 +137,20 @@
         </div>
 
 
-<!--  -->
-
-<!--  -->
-
-<!--  -->
-
-
-
-        <!-- <div class="row">
-          <div class="col-xs-12">
-            <h1>Extended Tokens</h1>
-          </div>
-        </div>
+<div class="row">
+  <div class="col-xs-12">
+    <h1>ABC<small>(1.8.3)</small></h1>
+  </div>
+</div>
 
 
-        <div class="row">
-          <div v-for="t in extended_tokens" :class="class_name" >
-            <div :class="t === current.action ? 'b selected' : 'b'" @click="action(t)">
-              {{t}}
-            </div>
-          </div>
-        </div> -->
-
+<div class="row">
+  <div v-for="a in alphabel_tokens" :class="smaller_class_name" >
+    <div :class="a === current.action ? 'b selected' : 'b'" @click="action(a)">
+      {{a}}
+    </div>
+  </div>
+</div>
 
 
       </div>
