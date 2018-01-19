@@ -55,7 +55,7 @@ app.get('/devices/',function(req,res){
 setInterval(function (){
   Object.keys(deviceActionDictionary).forEach(function(deviceName){
     const deviceData = deviceActionDictionary[deviceName]
-    if (Date.now() - deviceData.final  >  10 * 1000 ){
+    if (Date.now() - deviceData.final  >  60 * 1000 ){
       delete deviceActionDictionary[deviceName]
       console.log("Device Inactive:",deviceName,", Deleted")
     }
@@ -116,6 +116,9 @@ app.all("/show/",function(req,res){
   console.log("end")
   console.log(obj2csv(strForShow))
 })
+
+
+
 
 app.use("/", express.static(__dirname + "/public/"));
 

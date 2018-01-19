@@ -98,64 +98,58 @@
 
 
       </div>
+
+
+
+
+<!--  -->
+
 <!--  -->
       <div class="container" v-if="devices.length > 0 && current.device.length > 0">
         <div class="row">
           <div class="col-xs-12">
-            <h1>Korea Hardware Aciton<small>(1.5.5)</small></h1>
+            <h1>Hardware Aciton</h1>
           </div>
         </div>
 
         <div class="row">
-          <div v-for="a in korea_hardware_actions" :class="class_name" >
+          <div v-for="a in hardware_actions" :class="class_name" >
             <div :class="a === current.action ? 'b selected' : 'b'" @click="action(a)">
               {{a}}
             </div>
           </div>
         </div>
 <!--  -->
-
         <div class="row">
           <div class="col-xs-12">
-            <h1>Korea Tokens <small>(1.5.5)</small></h1>
+            <h1>ABC</h1>
           </div>
         </div>
 
 
         <div class="row">
-          <div v-for="a in korea_frequent_tokens" :class="class_name" >
+          <div v-for="a in alphabel_tokens" :class="smaller_class_name" >
             <div :class="a === current.action ? 'b selected' : 'b'" @click="action(a)">
               {{a}}
             </div>
           </div>
         </div>
 
-
 <!--  -->
-
-<!--  -->
-
-<!--  -->
-
-
-
-        <!-- <div class="row">
+        <div class="row">
           <div class="col-xs-12">
-            <h1>Extended Tokens</h1>
+            <h1>Tokens</h1>
           </div>
         </div>
 
 
         <div class="row">
-          <div v-for="t in extended_tokens" :class="class_name" >
-            <div :class="t === current.action ? 'b selected' : 'b'" @click="action(t)">
-              {{t}}
+          <div v-for="a in special_tokens" :class="class_name" >
+            <div :class="a === current.action ? 'b selected' : 'b'" @click="action(a)">
+              {{a}}
             </div>
           </div>
-        </div> -->
-
-
-
+        </div>
       </div>
     </div><!-- #app -->
     <script>
@@ -181,19 +175,6 @@
         },
 
         devices : [],
-
-        korea_hardware_actions : [
-          // "Shake Hand",
-          "Hug",
-          "Button",
-          // "Touch Head",
-          "Shake",
-          "Wiggle",
-          "Clap",
-          "Clap3",
-          "Idle"
-        ],
-        korea_frequent_tokens : ["A","B","C","K","L","M","P","Q","R","FL","FC","FT","CR","CY","CB","ABC","Invitation","Celebration"],
         hardware_actions: [
           // "Shake Hand",
           "Hug",
@@ -201,17 +182,15 @@
           // "Touch Head",
           "Shake",
           "Wiggle",
+          "Tickle",
           "Clap",
           "Clap3",
           "Idle",
           "Pat"
         ],
-        frequent_tokens : ["A","B","C","F","G","K","L","M","P","Q","R","FL","FC","FT","TR","TY","TB","ABC","Invitation","Celebration"],
+        special_tokens : ["FL","FC","FT","TR","TY","TB","ABC","Invitation","Celebration"],
         alphabel_tokens : GenCharArray('A', 'Z'),
 
-        extended_tokens : [
-          "Invitation","Celebration"
-        ],
 
       },
       methods : {
